@@ -64,7 +64,7 @@ export function CourierWorkspace() {
           onRestart={() => setRunId((r) => r + 1)}
         />
       </DeviceFrame>
-      <DemoPanel title="Courier workspace">
+      <DemoPanel title="Interface 4. Courier workspace">
         <p className="text-sm text-ink-muted">
           One doorstep COD delivery, from assigned task to completion. Designed to support the proposed Dee-Delivery compliance workflow. Not an existing SPX application and not legally certified.
         </p>

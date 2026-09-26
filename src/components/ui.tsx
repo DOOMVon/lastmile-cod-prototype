@@ -254,12 +254,42 @@ export function DemoPanel({ title, children }: { title: string; children: ReactN
   );
 }
 
-/** Neutral phone viewport. Not a replica of any device or app chrome. */
-export function DeviceFrame({ label, children }: { label: string; children: ReactNode }) {
+/**
+ * Generic phone frame (not a replica of any specific device).
+ * The bezel, status bar and home indicator appear from the sm breakpoint up;
+ * on a real phone the screen renders edge to edge without a frame.
+ */
+export function DeviceFrame({ label, children, statusBar = "light" }: { label: string; children: ReactNode; statusBar?: "light" | "dark" }) {
+  const dark = statusBar === "dark";
   return (
     <div className="mx-auto w-full max-w-[390px]">
-      <p className="mb-2 text-sm text-ink-subtle">{label}</p>
-      <div className="relative flex h-[760px] flex-col overflow-hidden rounded-lg border border-line-strong bg-canvas">{children}</div>
+      <p className="mb-3 text-sm text-white/90">{label}</p>
+      <div className="relative sm:rounded-[48px] sm:bg-bezel sm:p-[10px] sm:shadow-device">
+        {/* Side buttons */}
+        <span aria-hidden="true" className="absolute -left-[3px] top-[120px] hidden h-8 w-[3px] rounded-l-sm bg-bezel sm:block" />
+        <span aria-hidden="true" className="absolute -left-[3px] top-[168px] hidden h-14 w-[3px] rounded-l-sm bg-bezel sm:block" />
+        <span aria-hidden="true" className="absolute -right-[3px] top-[150px] hidden h-20 w-[3px] rounded-r-sm bg-bezel sm:block" />
+
+        <div className="relative flex flex-col overflow-hidden rounded-lg border border-line-strong bg-canvas sm:rounded-[38px] sm:border-0">
+          {/* Status bar */}
+          <div aria-hidden="true" className={cx("relative hidden h-9 shrink-0 items-center justify-between px-7 text-xs font-medium sm:flex", dark ? "bg-ink text-white" : "bg-white text-ink")}>
+            <span className="tabular">10:24</span>
+            <span className="absolute left-1/2 top-2.5 h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-bezel" />
+            <span className="flex items-center gap-1.5">
+              <svg viewBox="0 0 18 12" className="h-3 w-[18px]" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.5" /><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" /><rect x="10" y="3" width="3" height="9" rx="0.5" /><rect x="15" y="0" width="3" height="12" rx="0.5" /></svg>
+              <svg viewBox="0 0 16 12" className="h-3 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M1.5 4.5a9.5 9.5 0 0113 0M4 7.2a6 6 0 018 0" /><circle cx="8" cy="10" r="1" fill="currentColor" stroke="none" /></svg>
+              <svg viewBox="0 0 26 12" className="h-3 w-[26px]"><rect x="0.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="currentColor" strokeOpacity="0.45" /><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor" /><rect x="23.5" y="4" width="2" height="4" rx="1" fill="currentColor" fillOpacity="0.45" /></svg>
+            </span>
+          </div>
+
+          <div className="relative flex h-[760px] flex-col overflow-hidden">{children}</div>
+
+          {/* Home indicator */}
+          <div aria-hidden="true" className="hidden h-6 shrink-0 items-center justify-center bg-white sm:flex">
+            <span className="h-1 w-28 rounded-full bg-ink/85" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

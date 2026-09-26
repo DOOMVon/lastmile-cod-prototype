@@ -16,6 +16,7 @@ export default {
         danger: { DEFAULT: "#C62828", soft: "#FDECEC" },
         info: { DEFAULT: "#1F5FAE", soft: "#EBF2FB" },
         chat: "#E9EDF2",
+        bezel: "#161616",
       },
       fontFamily: {
         sans: ["Roboto", "Helvetica Neue", "Arial", "sans-serif"],
@@ -35,7 +36,15 @@ export default {
         DEFAULT: "4px",
         lg: "8px",
       },
+      backgroundImage: {
+        // Shopee-style header band: two close oranges, no rainbow gradients.
+        "brand-band": "linear-gradient(180deg, #EE4D2D 0%, #FF6633 100%)",
+        "band-dots": "radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1.2px)",
+      },
+      backgroundSize: { dots: "18px 18px" },
       boxShadow: {
+        device: "0 24px 48px rgba(34,34,34,0.22), 0 4px 12px rgba(34,34,34,0.12)",
+        window: "0 16px 40px rgba(34,34,34,0.16)",
         // Elevation only for overlays and sticky bars.
         overlay: "0 8px 24px rgba(34,34,34,0.16)",
         bar: "0 -1px 0 #E5E5E5, 0 -4px 12px rgba(34,34,34,0.04)",

@@ -19,14 +19,23 @@ export function SellerPrototype() {
 
   return (
     <div className="space-y-4">
-      <DemoPanel title="Interface 4. Seller Center returns and claims">
+      <DemoPanel title="Interface 5. Seller Center returns and claims">
         <div className="flex flex-wrap items-end gap-6">
           <Segmented label="Return details request" value={net} options={[{ value: "ok", label: "Succeeds" }, { value: "error", label: "Fails" }]} onChange={setNet} />
           <p className="max-w-md text-sm text-ink-muted">Three fictional returns cover the automated claim, a case sent to manual review, and a return with no damage.</p>
         </div>
       </DemoPanel>
 
-      <div className="overflow-hidden rounded border border-line-strong bg-canvas">
+      <div className="overflow-hidden rounded-lg border border-line-strong bg-canvas shadow-window">
+        <div aria-hidden="true" className="flex h-10 items-center gap-3 border-b border-line bg-[#EDEDED] px-4">
+          <span className="flex gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
+            <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
+            <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
+          </span>
+          <span className="mx-auto w-full max-w-md truncate rounded-full bg-white px-3 py-1 text-center text-xs text-ink-subtle">seller-center.demo/returns (prototype)</span>
+          <span className="w-12" />
+        </div>
         <header className="flex h-14 items-center justify-between border-b border-line bg-white px-5">
           <p className="text-md font-medium text-brand">Seller Center <span className="font-normal text-ink-subtle">(prototype)</span></p>
           <p className="text-sm text-ink-muted">Demo Merchant</p>

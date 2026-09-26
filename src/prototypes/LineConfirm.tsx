@@ -25,7 +25,7 @@ export function LinePrototype() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[390px_1fr]">
-      <DeviceFrame label="LINE Official Account chat (prototype of a Flex Message)">
+      <DeviceFrame label="LINE Official Account chat (prototype of a Flex Message)" statusBar="dark">
         <LineChat key={runId} deadline={deadline} net={net} />
       </DeviceFrame>
       <DemoPanel title="Interface 2. LINE confirmation (Tier 2)">
