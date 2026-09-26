@@ -254,6 +254,26 @@ export function DemoPanel({ title, children }: { title: string; children: ReactN
   );
 }
 
+/** Step progress for mobile flows. Icon above label so long labels never collide. */
+export function ProgressSteps({ steps, current, label = "Progress" }: { steps: readonly string[]; current: number; label?: string }) {
+  return (
+    <ol className="flex shrink-0 border-b border-line bg-white px-2 py-2 text-xs" aria-label={label}>
+      {steps.map((s, i) => {
+        const done = i < current;
+        const active = i === current;
+        return (
+          <li key={s} aria-current={active ? "step" : undefined} className={cx("flex min-w-0 flex-1 flex-col items-center gap-1 text-center", done || active ? "text-ink" : "text-ink-subtle")}>
+            <span className={cx("grid h-5 w-5 place-items-center rounded-full border text-[11px]", done ? "border-success bg-success text-white" : active ? "border-brand text-brand" : "border-line-strong")}>
+              {done ? <Icon name="check" className="h-3 w-3" /> : i + 1}
+            </span>
+            <span className="max-w-full leading-tight">{s}</span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 /**
  * Generic phone frame (not a replica of any specific device).
  * The bezel, status bar and home indicator appear from the sm breakpoint up;
