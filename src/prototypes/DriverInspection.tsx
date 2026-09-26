@@ -4,7 +4,7 @@ import { recordCollection, type NetworkScenario } from "../mock/services";
 import { RULES } from "../rules";
 import type { EvidencePhoto } from "../types";
 import { mmss, thb, useAsync, useStopwatch } from "../lib/hooks";
-import { Alert, Badge, Button, Card, DemoPanel, DeviceFrame, Field, Icon, Modal, Note, ProgressSteps, Segmented, StatusIndicator, inputClass } from "../components/ui";
+import { Alert, Badge, Button, Card, DemoPanel, DeviceFrame, Field, Icon, Modal, Note, Segmented, StatusIndicator, cx, inputClass } from "../components/ui";
 import { InspectionTimer, inspectionTimerState } from "../components/timers";
 import { EvidenceCapture, InspectionChecklist, type ChecklistValue } from "../components/inspection";
 
@@ -226,7 +226,18 @@ function DriverScreen({ net, skip }: { net: NetworkScenario; skip: { n: number; 
 function Stepper({ step }: { step: Step }) {
   const idx = step === "inspect" ? 0 : step === "decide" ? 1 : step === "receipt" ? 3 : 2;
   const labels = ["Inspect", "Collect payment", step === "refused" ? "Return" : "Receipt"];
-  return <ProgressSteps steps={labels} current={idx} label="Delivery steps" />;
+  return (
+    <ol className="flex shrink-0 border-b border-line bg-white px-3 py-2 text-xs" aria-label="Delivery steps">
+      {labels.map((l, i) => (
+        <li key={l} aria-current={i === idx ? "step" : undefined} className={cx("flex flex-1 items-center gap-1.5", i <= idx ? "text-ink" : "text-ink-subtle")}>
+          <span className={cx("grid h-5 w-5 place-items-center rounded-full border text-[11px]", i < idx ? "border-success bg-success text-white" : i === idx ? "border-brand text-brand" : "border-line-strong")}>
+            {i < idx ? <Icon name="check" className="h-3 w-3" /> : i + 1}
+          </span>
+          {l}
+        </li>
+      ))}
+    </ol>
+  );
 }
 
 function Receipt({ receiptNo, at, due, received, inspection }: { receiptNo: string; at: string; due: number; received: number; inspection: string }) {

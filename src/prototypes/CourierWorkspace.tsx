@@ -6,7 +6,7 @@ import { recordCollection, sendReceipt, type NetworkScenario } from "../mock/ser
 import { RULES } from "../rules";
 import type { ChecklistItemId, CourierDeliveryState, CourierOrder, EvidencePhoto, InspectionStatus } from "../types";
 import { mmss, thb, useStopwatch } from "../lib/hooks";
-import { Alert, Badge, Button, DemoPanel, DeviceFrame, Icon, Modal, Note, ProgressSteps, Segmented, type Tone } from "../components/ui";
+import { Alert, Badge, Button, DemoPanel, DeviceFrame, Icon, Modal, Note, Segmented, cx, type Tone } from "../components/ui";
 import { InspectionTimer, inspectionTimerState } from "../components/timers";
 import { EvidenceCapture, InspectionChecklist, type ChecklistValue } from "../components/inspection";
 
@@ -162,7 +162,7 @@ function CourierApp({
         </div>
         <Badge tone={badge.tone}>{badge.label}</Badge>
       </header>
-      <ProgressSteps steps={steps} current={stepIndex[state]} label="Delivery progress" />
+      <ProgressSteps current={stepIndex[state]} />
 
       <div className="flex-1 space-y-3 overflow-y-auto p-3" aria-live="polite">
         {/* SCREEN 1: DELIVERY TASK */}
@@ -325,6 +325,30 @@ function CourierApp({
 }
 
 // ---------- Pieces ----------
+
+function ProgressSteps({ current }: { current: number }) {
+  return (
+    <ol className="flex shrink-0 border-b border-line bg-white px-2 py-2 text-xs" aria-label="Delivery progress">
+      {steps.map((label, i) => {
+        const done = i < current;
+        const active = i === current;
+        return (
+          <li key={label} aria-current={active ? "step" : undefined} className={cx("flex flex-1 flex-col items-center gap-1", done || active ? "text-ink" : "text-ink-subtle")}>
+            <span
+              className={cx(
+                "grid h-5 w-5 place-items-center rounded-full border text-[11px]",
+                done ? "border-success bg-success text-white" : active ? "border-brand text-brand" : "border-line-strong",
+              )}
+            >
+              {done ? <Icon name="check" className="h-3 w-3" /> : i + 1}
+            </span>
+            {label}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 function ActionBar({ children }: { children: ReactNode }) {
   return <div className="shrink-0 border-t border-line bg-white px-3 py-3 shadow-bar">{children}</div>;
